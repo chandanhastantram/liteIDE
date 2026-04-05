@@ -1,0 +1,240 @@
+/* ====================================================
+   Editor Area: Tab Bar + Monaco Container
+   ==================================================== */
+
+.editor-area {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  background: var(--color-bg-editor);
+}
+
+/* Tab Bar */
+.tab-bar {
+  display: flex;
+  align-items: stretch;
+  height: var(--tab-height);
+  background: var(--color-bg-tab-inactive);
+  border-bottom: 1px solid var(--color-border-dark);
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+
+.tab-bar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Individual Tab */
+.editor-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 var(--spacing-md);
+  min-width: 120px;
+  max-width: 220px;
+  height: 100%;
+  background: var(--color-bg-tab-inactive);
+  border-right: 1px solid var(--color-border-dark);
+  color: var(--color-fg-tab-inactive);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  user-select: none;
+}
+
+.editor-tab:hover {
+  background: var(--color-bg-tab-hover);
+  color: var(--color-fg-default);
+}
+
+.editor-tab.active {
+  background: var(--color-bg-tab-active);
+  color: var(--color-fg-tab-active);
+  border-top: 1px solid var(--color-accent-border);
+}
+
+.editor-tab.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-accent-border);
+}
+
+.tab-file-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-file-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.tab-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--font-size-ui);
+}
+
+/* Dirty indicator */
+.tab-dirty {
+  width: 8px;
+  height: 8px;
+  background: var(--color-fg-muted);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: none;
+}
+
+.editor-tab.dirty .tab-dirty {
+  display: block;
+}
+
+.editor-tab.dirty .tab-close {
+  display: none;
+}
+
+.editor-tab.dirty:hover .tab-dirty {
+  display: none;
+}
+
+.editor-tab.dirty:hover .tab-close {
+  display: flex;
+}
+
+/* Close button */
+.tab-close {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-fg-muted);
+  flex-shrink: 0;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  padding: 2px;
+}
+
+.tab-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-fg-bright);
+}
+
+.tab-close svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Non-dirty tab: show close on hover */
+.editor-tab:not(.dirty) .tab-close {
+  opacity: 0;
+}
+.editor-tab:not(.dirty):hover .tab-close {
+  opacity: 1;
+}
+.editor-tab.active:not(.dirty) .tab-close {
+  opacity: 1;
+}
+
+/* Monaco Editor Container */
+.monaco-container {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Welcome / empty state inside editor area */
+.editor-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: var(--color-bg-editor);
+  color: var(--color-fg-muted);
+  animation: fadeIn 0.3s ease;
+  gap: var(--spacing-sm);
+}
+
+.editor-empty-icon {
+  font-size: 48px;
+  opacity: 0.3;
+  margin-bottom: var(--spacing-sm);
+}
+
+.editor-empty-title {
+  font-size: var(--font-size-medium);
+  color: var(--color-fg-default);
+  font-weight: 500;
+}
+
+.editor-empty-hint {
+  font-size: var(--font-size-small);
+  color: var(--color-fg-muted);
+}
+
+.editor-empty-kbd {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-small);
+  color: var(--color-fg-default);
+}
+
+/* Breadcrumb bar */
+.breadcrumb-bar {
+  display: flex;
+  align-items: center;
+  height: 22px;
+  background: var(--color-bg-editor);
+  border-bottom: 1px solid var(--color-border-dark);
+  padding: 0 var(--spacing-sm);
+  font-size: var(--font-size-small);
+  color: var(--color-fg-muted);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 0 2px;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast);
+}
+
+.breadcrumb-item:hover {
+  color: var(--color-fg-default);
+}
+
+.breadcrumb-separator {
+  margin: 0 2px;
+  opacity: 0.5;
+}
+
+.breadcrumb-item.current {
+  color: var(--color-fg-default);
+}
